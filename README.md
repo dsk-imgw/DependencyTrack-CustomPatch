@@ -6,10 +6,21 @@ Dependency Track のカスタム パッチ集です。公式に採用されて�
 
 ### **dependency-track-4.12.0_trivy_rpm+deb.patch**
 ### **dependency-track-4.11.7_trivy_rpm+deb.patch**
-  - RPM や DEB のパッケージ管理システムにおいて Trivy で作成した SBOM を、Dependency Track に登録し Trivy Analyser を使って分析すると、誤検知が発生します。原因は、Dependency Track に登録したソフトウェアで Epoch が使用されている場合、Dependency Track 内で Trivy API にスキャン リスクエストを生成する際に、問題があるためです（具体的には、バージョンに Epoch が含まれている & リリース番号を送信していないです）。
-  - このパッチは、それを解消するものです。ただし、Epoch を使用するパッケージ管理システムは、RPM と DEB のみしか知らないので、これらの場合にのみ適用されるような修正にとどめています。
-  - 一応、公式の Isuue (https://github.com/DependencyTrack/dependency-track/issues/3774) に問題の報告とパッチを添付しましたが、1 か月くらい進展がなかったので該当 Issue はクローズし、パッチは公式に採用されていません。
-  - 最近、同様と思われる Issue (https://github.com/DependencyTrack/dependency-track/issues/4164) が投稿されているようですw。
+- RPM や DEB のパッケージ管理システムにおいて Trivy で作成した SBOM を、Dependency Track に登録し Trivy Analyser を使って分析すると、誤検知が発生します。原因は、Dependency Track に登録したソフトウェアで Epoch が使用されている場合、Dependency Track 内で Trivy API にスキャン リスクエストを生成する際に、問題があるためです（具体的には、バージョンに Epoch が含まれている & リリース番号を送信していないです）。
+- このパッチは、それを解消するものです。ただし、Epoch を使用するパッケージ管理システムは、RPM と DEB のみしか知らないので、これらの場合にのみ適用されるような修正にとどめています。
+- 一応、公式の Isuue (https://github.com/DependencyTrack/dependency-track/issues/3774) に問題の報告とパッチを添付しましたが、1 か月くらい進展がなかったので該当 Issue はクローズし、パッチは公式に採用されていません。
+- 最近、同様と思われる Issue (https://github.com/DependencyTrack/dependency-track/issues/4164) が投稿されているようです。
+
+### （AND 条件のポリシー違反検知の改善）
+- 現状、なんとなく動くレベルのものを作成。
+- 仕様変更は以下のとおり。
+  - 【現行】
+    - AND 条件（N 個あるとする）でポリシー（名称を P とする）を作成した場合、条件を満たした場合にポリシー P が N 個検知され表示される。
+  - 【変更（案）】
+    - 条件を満たした場合にポリシー P が 1 個に集約されて検知され、表示される。
+- ただし、変更範囲が広域にわたりそうなので、正直実用性は低そう。現状ではパッチ公開はしない予定。
+  - ポリシー違反の種類の問題・・・現状、1 条件に対してポリシー違反が検知されるので、ポリシー違反の種類＝条件の種類（Operational/License/Security）となっておりわかりやすいが、異なる種類の条件を集約した場合、どの種類を割り振るかが問題。新たに種類を設けることもできるが、以下の「メトリクス」や「通知」時に問題が起きそう。
+  - メトリクスや通知への影響問題・・・件数のカウントやダッシュボード内表示、通知時の個数や内容に影響（エラー発生の可能性）が出そう。
 
 ## frontend 配下のモノ
 ### **i18n-ja/***
