@@ -9,7 +9,7 @@ Dependency Track のカスタム パッチ集です。公式に採用されて�
 - RPM や DEB のパッケージ管理システムにおいて Trivy で作成した SBOM を、Dependency Track に登録し Trivy Analyser を使って分析すると、誤検知が発生します。原因は、Dependency Track に登録したソフトウェアで Epoch が使用されている場合、Dependency Track 内で Trivy API にスキャン リスクエストを生成する際に、問題があるためです（具体的には、バージョンに Epoch が含まれている & リリース番号を送信していないです）。
 - このパッチは、それを解消するものです。ただし、Epoch を使用するパッケージ管理システムは、RPM と DEB のみしか知らないので、これらの場合にのみ適用されるような修正にとどめています。
 - 一応、公式の Isuue (https://github.com/DependencyTrack/dependency-track/issues/3774) に問題の報告とパッチを添付しましたが、1 か月くらい進展がなかったので該当 Issue はクローズし、パッチは公式に採用されていません。
-- 最近、同様と思われる Issue (https://github.com/DependencyTrack/dependency-track/issues/4164) が投稿されているようです。
+- 最近、同様と思われる Issue (https://github.com/DependencyTrack/dependency-track/issues/4164) が投稿されているようです。v4.12.1 または v4.13.0 で修正されるようなので、その際は本パッチは用済みになります。
 
 ### （AND 条件のポリシー違反検知の改善）
 - 現状、なんとなく動くレベルのものを作成。
